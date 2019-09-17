@@ -14,8 +14,8 @@ from pubnub.callbacks import SubscribeCallback
 from pubnub.enums import PNOperationType, PNStatusCategory
 
 pnconfig = PNConfiguration()
-pnconfig.publish_key = 'pub-c-c823b87a-2007-4df2-88da-ad535587f882'
-pnconfig.subscribe_key = 'sub-c-4143a002-4a53-11e9-bc27-728c10c631fc'
+pnconfig.publish_key = 'pub-c-6195dfae-921e-4e96-a204-00a480dd8248'
+pnconfig.subscribe_key = 'sub-c-52d8d15a-d96b-11e9-8d6d-8621f881bfdb'
 pnconfig.ssl = False
 pubnub = PubNub(pnconfig)
 
@@ -75,6 +75,7 @@ def get_status():
 while True:
     
     (humidity, temperature) = Adafruit_DHT.read_retry(sensor, pin)
+    print(humidity,temperature)
     DHT_Read = 'Temp={0:0.1f}*C\tHumidity={1:0.1f}%\t'.format(temperature,humidity)
     dictionary = {'eon': {'Temperature': temperature, 'Humidity': humidity}}
 
@@ -84,7 +85,8 @@ while True:
         
         print(DHT_Read),
         dry = get_status()
-        if dry == True and (humidity<HVal or temperature>TVal):
+        # if dry == True and (humidity<HVal or temperature>TVal):
+        if dry == True:
             print('\t\tPump ---> ON')
             pump.off()
             sleep(5)
